@@ -8,7 +8,7 @@ import java.util.List;
 public class ClosestWords {
 	LinkedList<String> closestWords = null;
 	int[][] matrix = null;
-	int minDistance = 1;
+	int minDistance = 0;
 	int closestDistance = -1;
 
 	int partDist(String w1, String w2, int w1len, int w2len) {
@@ -51,7 +51,8 @@ public class ClosestWords {
 
 	public ClosestWords(String w, List<String> wordList) {
 		for (String s : wordList) {
-			if(s.length() <= (w.length() + minDistance)){
+			//System.out.println("w: " + w.length());
+			if((s.length() <= (w.length() + minDistance)) || (w.equals(""))){
 				int dist = Distance(w, s);
 				// System.out.println("d(" + w + "," + s + ")=" + dist);
 				if (dist < closestDistance || closestDistance == -1) {
