@@ -6,16 +6,14 @@ import java.util.List;
 
 public class ClosestWords {
   LinkedList<String> closestWords = null;
-  int[][] matrix = null;
+
   int closestDistance = -1;
 
   int partDist(String w1, String w2, int w1len, int w2len) {
-	  
-	  if (w1len == 0)
+    if (w1len == 0)
       return w2len;
     if (w2len == 0)
       return w1len;
-    
     int res = partDist(w1, w2, w1len - 1, w2len - 1) + 
 	(w1.charAt(w1len - 1) == w2.charAt(w2len - 1) ? 0 : 1);
     int addLetter = partDist(w1, w2, w1len - 1, w2len) + 1;
@@ -28,12 +26,6 @@ public class ClosestWords {
   }
 
   int Distance(String w1, String w2) {
-	  matrix = new int[w1.length()][w2.length()]; //initialize matrix with the right dimensions
-	    for(int i = 0; i < matrix.length; i++) {
-	    	for(int j = 0; j < matrix[i].length; j++) {
-	    		matrix[i][j] = -1;
-	    	}
-	    }
     return partDist(w1, w2, w1.length(), w2.length());
   }
 

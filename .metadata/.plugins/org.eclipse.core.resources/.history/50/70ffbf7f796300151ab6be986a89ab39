@@ -6,7 +6,7 @@ import java.util.List;
 
 public class ClosestWords {
   LinkedList<String> closestWords = null;
-  int[][] matrix = null;
+  int[][] matric = null;
   int closestDistance = -1;
 
   int partDist(String w1, String w2, int w1len, int w2len) {
