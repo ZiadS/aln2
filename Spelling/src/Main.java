@@ -31,7 +31,7 @@ public class Main {
 		String word;
 		while ((word = stdin.readLine()) != null) {
 			ClosestWords closestWords = new ClosestWords(word, wordList);
-			System.out.println("Linked list size: " + closestWords.getClosestWords().size());
+			//System.out.println("Linked list size: " + closestWords.getClosestWords().size());
 			System.out.print(word + " (" + closestWords.getMinDistance() + ")");
 			for (String w : closestWords.getClosestWords()) {
 				System.out.print(" " + w);

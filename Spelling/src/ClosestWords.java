@@ -51,6 +51,7 @@ public class ClosestWords {
 
 	public ClosestWords(String w, List<String> wordList) {
 		for (String s : wordList) {
+			
 			//System.out.println("w: " + w.length());
 			if((s.length() <= (w.length() + minDistance)) || (w.equals(""))){
 				int dist = Distance(w, s);
@@ -64,7 +65,7 @@ public class ClosestWords {
 					closestWords.add(s);
 			}
 		}
-			
+		//	System.out.println("ngt matchar inte");
 	}
 
 	int getMinDistance() {
