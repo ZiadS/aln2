@@ -52,8 +52,8 @@ public class ClosestWords {
 	public ClosestWords(String w, List<String> wordList) {
 		for (String s : wordList) {
 			
-			//System.out.println("w: " + w.length());
-			if((s.length() <= (w.length() + minDistance)) || (w.equals(""))){
+			
+			if((s.length() <= (w.length() + minDistance)) || closestWords == null){
 				int dist = Distance(w, s);
 				// System.out.println("d(" + w + "," + s + ")=" + dist);
 				if (dist < closestDistance || closestDistance == -1) {
