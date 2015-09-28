@@ -39,11 +39,16 @@ public class ClosestWords {
 	}
 
 	int Distance(String w1, String w2) {
-		int subWordCount = wordMatch(w2);
-		System.out.println("subword: " + subWordCount);
-	    System.out.println("Previous word: " + previousWord);
-		for(int i = subWordCount; i <= w1.length(); i++) {
-	    	for(int j = 0; j <= w2.length(); j++) {
+		int subWordCount;
+		if((subWordCount = wordMatch(w2)) == 0) {
+			subWordCount = 0;
+		} else {
+			subWordCount += 1;
+		}
+	//	System.out.println("subword: " + subWordCount);
+	    //System.out.println("Previous word: " + previousWord);
+		for(int i = 0; i <= w1.length(); i++) {
+	    	for(int j = subWordCount; j <= w2.length(); j++) {
 	    		matrix[i][j] = partDist(w1,w2, i, j);
 	    	}
 	    }
@@ -62,10 +67,13 @@ public class ClosestWords {
 		}
 		
 		for(int i = 0; i < interval; i++) {
-			if(w2.charAt(i) == previousWord.charAt(i)) {
-				count++;
+			if(w2.charAt(i) != previousWord.charAt(i)) {
+				break;
 			}
+			count++;
 		}
+		//System.out.println("prevous: " + previousWord + " &" + w2 + " count: " + count);
+
 		return count;
 	}
 	
