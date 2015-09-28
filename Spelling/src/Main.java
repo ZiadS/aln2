@@ -23,12 +23,12 @@ public class Main {
 	}
 
 	public static void main(String args[]) throws IOException {
-		//long t1 = System.currentTimeMillis();
 		BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in, "UTF-8"));
 		// Säkrast att specificera att UTF-8 ska användas, för vissa system har annan
 		// standardinställning för teckenkodningen.
 		List<String> wordList = readWordList(stdin);
 		String word;
+		long t1 = System.currentTimeMillis();
 		while ((word = stdin.readLine()) != null) {
 			ClosestWords closestWords = new ClosestWords(word, wordList);
 			//System.out.println("Linked list size: " + closestWords.getClosestWords().size());
@@ -38,8 +38,9 @@ public class Main {
 			}
 			System.out.println();
 		}
-		//long tottime = (System.currentTimeMillis() - t1);
-	//	System.out.println("CPU time: " + tottime + " ms");
+		long tottime = (System.currentTimeMillis() - t1);
+
+		//System.out.println("CPU time: " + tottime + " ms");
 
 	}
 }

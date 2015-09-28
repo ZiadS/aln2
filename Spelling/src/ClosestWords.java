@@ -7,55 +7,59 @@ import java.util.List;
 
 public class ClosestWords {
 	LinkedList<String> closestWords = null;
-	int[][] matrix = null;
+	int[][] matrix = new int[7][7];
+	//int counter = 0;
+	//int wordFiltered = 0;
 	int minDistance = 0;
 	int closestDistance = -1;
 
 	int partDist(String w1, String w2, int w1len, int w2len) {
-		if(checkMatrix(w1len, w2len)){	// If value exists
-			// System.out.println(matrix[w1len][w2len]);
-			return matrix[w1len][w2len];	 
-		}
-		
+	
 		if (w1len == 0) {
 			return w2len;
 		}
 		if (w2len == 0) {
 			return w1len;
 		}
-    
-		int res = partDist(w1, w2, w1len - 1, w2len - 1) + 
-				(w1.charAt(w1len - 1) == w2.charAt(w2len - 1) ? 0 : 1);
-		int addLetter = partDist(w1, w2, w1len - 1, w2len) + 1;
 		
-		if (addLetter < res)
+		int res = matrix[w1len - 1][w2len - 1] +
+				(w1.charAt(w1len - 1) == w2.charAt(w2len - 1) ? 0 : 1);
+		
+		
+		int addLetter = matrix[w1len - 1][w2len] + 1;
+		
+		if (addLetter < res){
 			res = addLetter;
-		int deleteLetter = partDist(w1, w2, w1len, w2len - 1) + 1;
+		}
+		int deleteLetter = matrix[w1len][w2len - 1] + 1;
 		if (deleteLetter < res){
 			res = deleteLetter;
 		}
-		matrix[w1len][w2len] = res;
+
 		return res;
 	}
 
-	int Distance(String w1, String w2) {
-		matrix = new int[w1.length() + 1][w2.length() + 1]; //initialize matrix with the right dimensions
-	    for(int i = 0; i < matrix.length; i++) {
-	    	for(int j = 0; j < matrix[i].length; j++) {
-	    		matrix[i][j] = -1;
+	int Distance(String w1, String w2) {	
+	    for(int i = 0; i < w1.length() + 1; i++) {
+	    	for(int j = 0; j < w2.length() + 1; j++) {
+	    		matrix[i][j] = partDist(w1,w2,i,j);
 	    	}
+	    	
 	    }
-	  // System.out.println(Arrays.deepToString(matrix));
-    return partDist(w1, w2, w1.length(), w2.length());
+
+	  System.out.println(Arrays.deepToString(matrix));
+    return matrix[w1.length() - 1][w2.length() - 1];
 	}
 
 	public ClosestWords(String w, List<String> wordList) {
 		for (String s : wordList) {
 			
-			
-			if((s.length() <= (w.length() + minDistance)) || closestWords == null){
+//	System.out.println("The word is next to get testet: " + s);	
+			if(((s.length() <= (w.length() + minDistance)) && (s.length() >= (w.length() - minDistance))) || closestWords == null){
+			//System.out.println("The word is now in if statement: " + s);	
+				//wordFiltered++;
 				int dist = Distance(w, s);
-				// System.out.println("d(" + w + "," + s + ")=" + dist);
+		//		System.out.println("d(" + w + "," + s + ")=" + dist);
 				if (dist < closestDistance || closestDistance == -1) {
 					minDistance = dist;
 					closestDistance = dist;
@@ -64,11 +68,14 @@ public class ClosestWords {
 				} else if (dist == closestDistance)
 					closestWords.add(s);
 			}
+			//counter++;
 		}
+	
 		//	System.out.println("ngt matchar inte");
 	}
-
+	
 	int getMinDistance() {
+		//System.out.println("Words searched: " + counter + " Words skipped: " + (counter - wordFiltered) + " Times in if: " + wordFiltered);
 		return closestDistance;
 	}
 
