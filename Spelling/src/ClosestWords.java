@@ -7,14 +7,13 @@ import java.util.List;
 
 public class ClosestWords {
 	LinkedList<String> closestWords = null;
-	int[][] matrix = new int[7][7];
+	int[][] matrix = new int[40][40];
 	//int counter = 0;
 	//int wordFiltered = 0;
 	int minDistance = 0;
 	int closestDistance = -1;
 
 	int partDist(String w1, String w2, int w1len, int w2len) {
-	
 		if (w1len == 0) {
 			return w2len;
 		}
@@ -23,32 +22,30 @@ public class ClosestWords {
 		}
 		
 		int res = matrix[w1len - 1][w2len - 1] +
-				(w1.charAt(w1len - 1) == w2.charAt(w2len - 1) ? 0 : 1);
-		
+			(w1.charAt(w1len - 1) == w2.charAt(w2len - 1) ? 0 : 1);
 		
 		int addLetter = matrix[w1len - 1][w2len] + 1;
 		
 		if (addLetter < res){
 			res = addLetter;
 		}
+		
 		int deleteLetter = matrix[w1len][w2len - 1] + 1;
 		if (deleteLetter < res){
 			res = deleteLetter;
 		}
-
 		return res;
 	}
 
 	int Distance(String w1, String w2) {	
-	    for(int i = 0; i < w1.length() + 1; i++) {
-	    	for(int j = 0; j < w2.length() + 1; j++) {
-	    		matrix[i][j] = partDist(w1,w2,i,j);
+	    for(int i = 0; i <= w1.length(); i++) {
+	    	for(int j = 0; j <= w2.length(); j++) {
+	    		matrix[i][j] = partDist(w1,w2, i, j);
 	    	}
-	    	
 	    }
 
-	  System.out.println(Arrays.deepToString(matrix));
-    return matrix[w1.length() - 1][w2.length() - 1];
+	 // System.out.println(Arrays.deepToString(matrix));
+    return matrix[w1.length()][w2.length()];
 	}
 
 	public ClosestWords(String w, List<String> wordList) {
