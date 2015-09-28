@@ -10,6 +10,7 @@ public class ClosestWords {
 	int[][] matrix = new int[40][40];
 	//int counter = 0;
 	//int wordFiltered = 0;
+	String previousWord = "";
 	int minDistance = 0;
 	int closestDistance = -1;
 
@@ -37,17 +38,37 @@ public class ClosestWords {
 		return res;
 	}
 
-	int Distance(String w1, String w2) {	
-	    for(int i = 0; i <= w1.length(); i++) {
+	int Distance(String w1, String w2) {
+		int subWordCount = wordMatch(w2);
+		System.out.println("subword: " + subWordCount);
+	    System.out.println("Previous word: " + previousWord);
+		for(int i = subWordCount; i <= w1.length(); i++) {
 	    	for(int j = 0; j <= w2.length(); j++) {
 	    		matrix[i][j] = partDist(w1,w2, i, j);
 	    	}
 	    }
-
-	 // System.out.println(Arrays.deepToString(matrix));
-    return matrix[w1.length()][w2.length()];
+	//System.out.println(Arrays.deepToString(matrix));
+	    previousWord = w2;
+	    return matrix[w1.length()][w2.length()];
 	}
-
+	
+	private int wordMatch(String w2) {
+		int count = 0;
+		int interval;
+		if(w2.length() >= previousWord.length()) {
+			interval = previousWord.length();
+		} else {
+			interval = w2.length();
+		}
+		
+		for(int i = 0; i < interval; i++) {
+			if(w2.charAt(i) == previousWord.charAt(i)) {
+				count++;
+			}
+		}
+		return count;
+	}
+	
 	public ClosestWords(String w, List<String> wordList) {
 		for (String s : wordList) {
 			
